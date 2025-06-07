@@ -1,0 +1,53 @@
+{% block head %}
+{% block title %}{% endblock %}
+<link rel="stylesheet" href="{{url_for('static',filename='market-analysis.css')}}">
+<script>
+    // Simulate fetching real-time market data
+    async function fetchMarketData() {
+        const sector = document.getElementById('business-sector').value;
+        const loadingDiv = document.getElementById('loading');
+        const resultsDiv = document.getElementById('results');
+        
+        if (!sector) {
+            alert('Please select a business sector.');
+            return;
+        }
+        
+        loadingDiv.style.display = 'block';
+        resultsDiv.style.display = 'none';
+
+        // Simulate an API call with a timeout
+        setTimeout(() => {
+            loadingDiv.style.display = 'none';
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <h3>Market Analysis for ${sector}</h3>
+                <p><strong>Current Trend:</strong> Growing by 4.5% annually.</p>
+                <p><strong>Top Investment Areas:</strong> ${sector === 'Technology' ? 'AI, Cloud Computing, and IoT' : 'Emerging Markets and Infrastructure'}</p>
+                <p><strong>Risk Level:</strong> Moderate.</p>
+                <p><strong>Advice:</strong> Focus on diversification and innovation in ${sector} to remain competitive.</p>
+            `;
+        }, 2000); // Simulated 2-second delay
+    }
+</script>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <h1>Real-Time Market Analysis</h1>
+    <label for="business-sector">Select Your Business Sector</label>
+    <select id="business-sector">
+        <option value="">--Select Sector--</option>
+        <option value="Retail">Retail</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Agriculture">Agriculture</option>
+        <option value="Technology">Technology</option>
+        <option value="Services">Services</option>
+        <option value="Other">Other</option>
+    </select>
+    <button onclick="fetchMarketData()">Get Market Analysis</button>
+    <div id="loading" class="loading" style="display: none;">Fetching data... Please wait.</div>
+    <div id="results" class="results" style="display: none;"></div>
+</div>
+{% endblock %}
